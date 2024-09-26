@@ -11,6 +11,8 @@ namespace Fora
 
             builder.Services.AddSingleton<IForaService, ForaService>();
 
+            builder.Services.AddAutoMapper(typeof(Program));
+
             // Add services to the container.
 
             builder.Services.AddControllers();

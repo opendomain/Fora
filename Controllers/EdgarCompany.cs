@@ -12,19 +12,21 @@ namespace Fora.Controllers
 
         public EdgarCompany(IForaService foraService)
         {
-                _foraService = foraService;
+            _foraService = foraService;
         }
 
         [HttpGet]
-        public IActionResult Get() {
-            var allCompanies = _foraService.GetAllCompanies();
-            return Ok(allCompanies);
+        public IActionResult Get()
+        {
+            List<Model.EdgarCompanyInfo>? allEdgarCompanies = _foraService.GetAllCompanies();
+            return Ok(allEdgarCompanies);
         }
 
         [HttpGet("{Cik}")]
-        public IActionResult Get(int Cik) {
-            var allCompanies = _foraService.GetCompany(Cik);
-            return Ok(allCompanies);
+        public IActionResult Get(int Cik)
+        {
+            Model.EdgarCompanyInfo? edgarCompany = _foraService.GetCompany(Cik);
+            return Ok(edgarCompany);
         }
 
     }
