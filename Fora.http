@@ -1,0 +1,6 @@
+@Fora_HostAddress = http://localhost:5136
+
+GET {{Fora_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
