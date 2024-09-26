@@ -1,4 +1,6 @@
 
+using Fora.Services;
+
 namespace Fora
 {
     public class Program
@@ -6,6 +8,8 @@ namespace Fora
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSingleton<IForaService, ForaService>();
 
             // Add services to the container.
 
