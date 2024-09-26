@@ -1,5 +1,6 @@
 
 using Fora.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fora
 {
@@ -9,9 +10,13 @@ namespace Fora
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            string? connectionString = builder.Configuration.GetConnectionString("ForaEdgarDbServerConn");
+            builder.Services.AddDbContext<EdgarCompanyDataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
+
             builder.Services.AddSingleton<IForaService, ForaService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
+
 
             // Add services to the container.
 

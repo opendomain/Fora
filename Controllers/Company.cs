@@ -19,14 +19,16 @@ namespace Fora.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(char? startLetter)
+        public IActionResult Get(char? startChar)
         {
             List<Model.EdgarCompanyInfo>? allEdgarCompanies = _foraService.GetAllCompanies();
 
-            if (startLetter != null)
+            if (startChar != null)
             {
                 // TODO: allow more than one letter?
-                allEdgarCompanies = allEdgarCompanies.Where(ec => ec.EntityName.StartsWith(startLetter.ToString(), StringComparison.CurrentCultureIgnoreCase )).ToList();
+                string strLetter = (startChar.HasValue) ? startChar.ToString(): "";
+
+                allEdgarCompanies = allEdgarCompanies.Where(ec => ec.EntityName.StartsWith(strLetter, StringComparison.CurrentCultureIgnoreCase )).ToList();
             }
 
             List<Model.Company> allCompanies;
@@ -39,7 +41,7 @@ namespace Fora.Controllers
         [HttpGet("{Cik}")]
         public IActionResult Get(int Cik)
         {
-            Model.EdgarCompanyInfo edgarCompany = _foraService.GetCompany(Cik);
+            Model.EdgarCompanyInfo? edgarCompany = _foraService.GetCompany(Cik);
 
             Model.Company company;
             company = _mapper.Map<Model.Company>(edgarCompany);
