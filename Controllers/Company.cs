@@ -19,9 +19,15 @@ namespace Fora.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(char? startLetter)
         {
             List<Model.EdgarCompanyInfo>? allEdgarCompanies = _foraService.GetAllCompanies();
+
+            if (startLetter != null)
+            {
+                // TODO: allow more than one letter?
+                allEdgarCompanies = allEdgarCompanies.Where(ec => ec.EntityName.StartsWith(startLetter.ToString(), StringComparison.CurrentCultureIgnoreCase )).ToList();
+            }
 
             List<Model.Company> allCompanies;
 
