@@ -12,12 +12,20 @@ namespace Fora
 
             // Add services to the container.
 
+            builder.Services.Configure<HostOptions>(x =>
+            {
+                x.ServicesStartConcurrently = false;
+                x.ServicesStopConcurrently = false;
+            });
+
             string? connectionString = builder.Configuration.GetConnectionString("ForaEdgarDbServerConn");
             builder.Services.AddDbContext<EdgarCompanyDataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 
             builder.Services.AddSingleton<ICrudDbService, CrudDbService>();
             builder.Services.AddSingleton<ICallEdgarService, CallEdgarService>();
             builder.Services.AddAutoMapper(typeof(Program));
+
+            builder.Services.AddHostedService<UpdateDbBackgroundService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

@@ -33,7 +33,19 @@ namespace Fora.Services
             EdgarCompanyInfo? edgarCompanyInfo = null;
 
             string ckid = FormatID(cik);
-            edgarCompanyInfo = await _httpClient.GetFromJsonAsync<EdgarCompanyInfo>(ckid);
+            try
+            {
+                edgarCompanyInfo = await _httpClient.GetFromJsonAsync<EdgarCompanyInfo>(ckid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                if (ex.Message.Contains("404"))
+                {
+                    // Use empty company name to indicate not found
+                    edgarCompanyInfo = new EdgarCompanyInfo(cik, "");
+                }
+            }
 
             return edgarCompanyInfo;
         }

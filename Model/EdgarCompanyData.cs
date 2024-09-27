@@ -8,20 +8,17 @@ namespace Fora.Model
     {
         public EdgarCompanyData(int cik)
         {
-            this.Cik = Cik;
+            this.Cik = cik;
             this.EntityName = null;
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
 
         public EdgarCompanyData(int cik, string entityName)
         {
-            this.Cik = Cik;
+            this.Cik = cik;
             this.EntityName = entityName;
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
 
         [Key]
         [Required]
@@ -30,6 +27,8 @@ namespace Fora.Model
 
         public string? EntityName { get; set; }
         public List<InfoFactUsGaapIncomeLossUnitsUsd> Usd { get; set; }
+
+        public DateTime? Updated { get; set; }
 
         public class InfoFactUsGaapIncomeLossUnitsUsd
         {

@@ -4,7 +4,7 @@ namespace Fora.Model
 {
     public class EdgarCompanyInfo
     {
-        public EdgarCompanyInfo(int Cik, string entityName)
+        public EdgarCompanyInfo(int Cik, string? entityName)
         {
             this.Cik = Cik;
             this.EntityName = entityName;
@@ -19,7 +19,8 @@ namespace Fora.Model
             }
         }
 
-        public string EntityName { get; set; }
+        public string? EntityName { get; set; }
+        
         public InfoFact Facts { get; set; }
         public class InfoFact
         {

@@ -3,6 +3,7 @@ using Fora.Model;
 using Fora.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Fora.Controllers
 {
@@ -22,7 +23,7 @@ namespace Fora.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(char? startChar)
         {
-            List<EdgarCompanyData>? allEdgarCompanyData = await _crudDbService.GetAllCompanyData();
+            List<EdgarCompanyData>? allEdgarCompanyData = await _crudDbService.GetAllCompanyData(onlyGetUpdatedFlag: true, onlyGetValidNames: true);
 
             if (startChar != null)
             {

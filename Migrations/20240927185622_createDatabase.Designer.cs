@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fora.Migrations
 {
     [DbContext(typeof(EdgarCompanyDataContext))]
-    [Migration("20240926205351_createDatabase")]
+    [Migration("20240927185622_createDatabase")]
     partial class createDatabase
     {
         /// <inheritdoc />
@@ -33,11 +33,8 @@ namespace Fora.Migrations
                     b.Property<string>("EntityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Cik");
 
@@ -46,503 +43,403 @@ namespace Fora.Migrations
                     b.HasData(
                         new
                         {
-                            Cik = 18926,
-                            id = 0
+                            Cik = 18926
                         },
                         new
                         {
-                            Cik = 892553,
-                            id = 0
+                            Cik = 892553
                         },
                         new
                         {
-                            Cik = 1510524,
-                            id = 0
+                            Cik = 1510524
                         },
                         new
                         {
-                            Cik = 1858912,
-                            id = 0
+                            Cik = 1858912
                         },
                         new
                         {
-                            Cik = 1828248,
-                            id = 0
+                            Cik = 1828248
                         },
                         new
                         {
-                            Cik = 1819493,
-                            id = 0
+                            Cik = 1819493
                         },
                         new
                         {
-                            Cik = 60086,
-                            id = 0
+                            Cik = 60086
                         },
                         new
                         {
-                            Cik = 1853630,
-                            id = 0
+                            Cik = 1853630
                         },
                         new
                         {
-                            Cik = 1761312,
-                            id = 0
+                            Cik = 1761312
                         },
                         new
                         {
-                            Cik = 1851182,
-                            id = 0
+                            Cik = 1851182
                         },
                         new
                         {
-                            Cik = 1034665,
-                            id = 0
+                            Cik = 1034665
                         },
                         new
                         {
-                            Cik = 927628,
-                            id = 0
+                            Cik = 927628
                         },
                         new
                         {
-                            Cik = 1125259,
-                            id = 0
+                            Cik = 1125259
                         },
                         new
                         {
-                            Cik = 1547660,
-                            id = 0
+                            Cik = 1547660
                         },
                         new
                         {
-                            Cik = 1393311,
-                            id = 0
+                            Cik = 1393311
                         },
                         new
                         {
-                            Cik = 1757143,
-                            id = 0
+                            Cik = 1757143
                         },
                         new
                         {
-                            Cik = 1958217,
-                            id = 0
+                            Cik = 1958217
                         },
                         new
                         {
-                            Cik = 312070,
-                            id = 0
+                            Cik = 312070
                         },
                         new
                         {
-                            Cik = 310522,
-                            id = 0
+                            Cik = 310522
                         },
                         new
                         {
-                            Cik = 1861841,
-                            id = 0
+                            Cik = 1861841
                         },
                         new
                         {
-                            Cik = 1037868,
-                            id = 0
+                            Cik = 1037868
                         },
                         new
                         {
-                            Cik = 1696355,
-                            id = 0
+                            Cik = 1696355
                         },
                         new
                         {
-                            Cik = 1166834,
-                            id = 0
+                            Cik = 1166834
                         },
                         new
                         {
-                            Cik = 915912,
-                            id = 0
+                            Cik = 915912
                         },
                         new
                         {
-                            Cik = 1085277,
-                            id = 0
+                            Cik = 1085277
                         },
                         new
                         {
-                            Cik = 831259,
-                            id = 0
+                            Cik = 831259
                         },
                         new
                         {
-                            Cik = 882291,
-                            id = 0
+                            Cik = 882291
                         },
                         new
                         {
-                            Cik = 1521036,
-                            id = 0
+                            Cik = 1521036
                         },
                         new
                         {
-                            Cik = 1824502,
-                            id = 0
+                            Cik = 1824502
                         },
                         new
                         {
-                            Cik = 1015647,
-                            id = 0
+                            Cik = 1015647
                         },
                         new
                         {
-                            Cik = 884624,
-                            id = 0
+                            Cik = 884624
                         },
                         new
                         {
-                            Cik = 1501103,
-                            id = 0
+                            Cik = 1501103
                         },
                         new
                         {
-                            Cik = 1397183,
-                            id = 0
+                            Cik = 1397183
                         },
                         new
                         {
-                            Cik = 1552797,
-                            id = 0
+                            Cik = 1552797
                         },
                         new
                         {
-                            Cik = 1894630,
-                            id = 0
+                            Cik = 1894630
                         },
                         new
                         {
-                            Cik = 823277,
-                            id = 0
+                            Cik = 823277
                         },
                         new
                         {
-                            Cik = 21175,
-                            id = 0
+                            Cik = 21175
                         },
                         new
                         {
-                            Cik = 1439124,
-                            id = 0
+                            Cik = 1439124
                         },
                         new
                         {
-                            Cik = 52827,
-                            id = 0
+                            Cik = 52827
                         },
                         new
                         {
-                            Cik = 1730773,
-                            id = 0
+                            Cik = 1730773
                         },
                         new
                         {
-                            Cik = 1867287,
-                            id = 0
+                            Cik = 1867287
                         },
                         new
                         {
-                            Cik = 1685428,
-                            id = 0
+                            Cik = 1685428
                         },
                         new
                         {
-                            Cik = 1007587,
-                            id = 0
+                            Cik = 1007587
                         },
                         new
                         {
-                            Cik = 92103,
-                            id = 0
+                            Cik = 92103
                         },
                         new
                         {
-                            Cik = 1641751,
-                            id = 0
+                            Cik = 1641751
                         },
                         new
                         {
-                            Cik = 6845,
-                            id = 0
+                            Cik = 6845
                         },
                         new
                         {
-                            Cik = 1231457,
-                            id = 0
+                            Cik = 1231457
                         },
                         new
                         {
-                            Cik = 947263,
-                            id = 0
+                            Cik = 947263
                         },
                         new
                         {
-                            Cik = 895421,
-                            id = 0
+                            Cik = 895421
                         },
                         new
                         {
-                            Cik = 1988979,
-                            id = 0
+                            Cik = 1988979
                         },
                         new
                         {
-                            Cik = 1848898,
-                            id = 0
+                            Cik = 1848898
                         },
                         new
                         {
-                            Cik = 844790,
-                            id = 0
+                            Cik = 844790
                         },
                         new
                         {
-                            Cik = 1541309,
-                            id = 0
+                            Cik = 1541309
                         },
                         new
                         {
-                            Cik = 1858007,
-                            id = 0
+                            Cik = 1858007
                         },
                         new
                         {
-                            Cik = 1729944,
-                            id = 0
+                            Cik = 1729944
                         },
                         new
                         {
-                            Cik = 726958,
-                            id = 0
+                            Cik = 726958
                         },
                         new
                         {
-                            Cik = 1691221,
-                            id = 0
+                            Cik = 1691221
                         },
                         new
                         {
-                            Cik = 730272,
-                            id = 0
+                            Cik = 730272
                         },
                         new
                         {
-                            Cik = 1308106,
-                            id = 0
+                            Cik = 1308106
                         },
                         new
                         {
-                            Cik = 884144,
-                            id = 0
+                            Cik = 884144
                         },
                         new
                         {
-                            Cik = 1108134,
-                            id = 0
+                            Cik = 1108134
                         },
                         new
                         {
-                            Cik = 1849058,
-                            id = 0
+                            Cik = 1849058
                         },
                         new
                         {
-                            Cik = 1435617,
-                            id = 0
+                            Cik = 1435617
                         },
                         new
                         {
-                            Cik = 1857518,
-                            id = 0
+                            Cik = 1857518
                         },
                         new
                         {
-                            Cik = 64803,
-                            id = 0
+                            Cik = 64803
                         },
                         new
                         {
-                            Cik = 1912498,
-                            id = 0
+                            Cik = 1912498
                         },
                         new
                         {
-                            Cik = 1447380,
-                            id = 0
+                            Cik = 1447380
                         },
                         new
                         {
-                            Cik = 1232384,
-                            id = 0
+                            Cik = 1232384
                         },
                         new
                         {
-                            Cik = 1141788,
-                            id = 0
+                            Cik = 1141788
                         },
                         new
                         {
-                            Cik = 1549922,
-                            id = 0
+                            Cik = 1549922
                         },
                         new
                         {
-                            Cik = 914475,
-                            id = 0
+                            Cik = 914475
                         },
                         new
                         {
-                            Cik = 1498382,
-                            id = 0
+                            Cik = 1498382
                         },
                         new
                         {
-                            Cik = 1400897,
-                            id = 0
+                            Cik = 1400897
                         },
                         new
                         {
-                            Cik = 314808,
-                            id = 0
+                            Cik = 314808
                         },
                         new
                         {
-                            Cik = 1323885,
-                            id = 0
+                            Cik = 1323885
                         },
                         new
                         {
-                            Cik = 1526520,
-                            id = 0
+                            Cik = 1526520
                         },
                         new
                         {
-                            Cik = 1550695,
-                            id = 0
+                            Cik = 1550695
                         },
                         new
                         {
-                            Cik = 1634293,
-                            id = 0
+                            Cik = 1634293
                         },
                         new
                         {
-                            Cik = 1756708,
-                            id = 0
+                            Cik = 1756708
                         },
                         new
                         {
-                            Cik = 1540159,
-                            id = 0
+                            Cik = 1540159
                         },
                         new
                         {
-                            Cik = 1076691,
-                            id = 0
+                            Cik = 1076691
                         },
                         new
                         {
-                            Cik = 1980088,
-                            id = 0
+                            Cik = 1980088
                         },
                         new
                         {
-                            Cik = 1532346,
-                            id = 0
+                            Cik = 1532346
                         },
                         new
                         {
-                            Cik = 923796,
-                            id = 0
+                            Cik = 923796
                         },
                         new
                         {
-                            Cik = 1849635,
-                            id = 0
+                            Cik = 1849635
                         },
                         new
                         {
-                            Cik = 1872292,
-                            id = 0
+                            Cik = 1872292
                         },
                         new
                         {
-                            Cik = 1227857,
-                            id = 0
+                            Cik = 1227857
                         },
                         new
                         {
-                            Cik = 1046311,
-                            id = 0
+                            Cik = 1046311
                         },
                         new
                         {
-                            Cik = 1710350,
-                            id = 0
+                            Cik = 1710350
                         },
                         new
                         {
-                            Cik = 1476150,
-                            id = 0
+                            Cik = 1476150
                         },
                         new
                         {
-                            Cik = 1844642,
-                            id = 0
+                            Cik = 1844642
                         },
                         new
                         {
-                            Cik = 1967078,
-                            id = 0
+                            Cik = 1967078
                         },
                         new
                         {
-                            Cik = 14272,
-                            id = 0
+                            Cik = 14272
                         },
                         new
                         {
-                            Cik = 933267,
-                            id = 0
+                            Cik = 933267
                         },
                         new
                         {
-                            Cik = 1157557,
-                            id = 0
+                            Cik = 1157557
                         },
                         new
                         {
-                            Cik = 1560293,
-                            id = 0
+                            Cik = 1560293
                         },
                         new
                         {
-                            Cik = 217410,
-                            id = 0
+                            Cik = 217410
                         },
                         new
                         {
-                            Cik = 1798562,
-                            id = 0
+                            Cik = 1798562
                         },
                         new
                         {
-                            Cik = 1038074,
-                            id = 0
+                            Cik = 1038074
                         },
                         new
                         {
-                            Cik = 1843370,
-                            id = 0
+                            Cik = 1843370
                         });
                 });
 

@@ -4,7 +4,7 @@ namespace Fora.Services
 {
     public interface ICrudDbService
     {
-        Task<List<EdgarCompanyData>> GetAllCompanyData();
+        Task<List<EdgarCompanyData>> GetAllCompanyData(bool onlyGetUpdatedFlag, bool onlyGetValidNames);
 
         Task<EdgarCompanyData?> GetCompanyData(int cik);
 

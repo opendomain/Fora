@@ -1,5 +1,6 @@
 ﻿using Fora.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Fora.Services
 {
@@ -33,9 +34,25 @@ namespace Fora.Services
             return result >= 0;
         }
 
-        public async Task<List<EdgarCompanyData>> GetAllCompanyData()
+        // TODO: make filters ternary
+        public async Task<List<EdgarCompanyData>> GetAllCompanyData(bool onlyGetUpdatedFlag, bool onlyGetValidNames)
         {
-            return await _db.EdgarCompanyDataList.ToListAsync();
+            List<EdgarCompanyData>? allEdgarCompanyData = await _db.EdgarCompanyDataList.ToListAsync();
+
+            if (allEdgarCompanyData != null && allEdgarCompanyData.Count > 0)
+            {
+                if (onlyGetUpdatedFlag)
+                {
+                    allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => ec.Updated != null);
+                }
+
+                if (onlyGetValidNames)
+                {
+                    allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => !string.IsNullOrEmpty(ec.EntityName) );
+                }
+
+            }
+            return allEdgarCompanyData;
         }
 
         public async Task<EdgarCompanyData?> GetCompanyData(int cik)
@@ -52,6 +69,7 @@ namespace Fora.Services
             }
 
             edgarCompanyData.EntityName = entityName;
+            edgarCompanyData.Updated = DateTime.UtcNow;
             var result = await _db.SaveChangesAsync();
             return result >= 0;
         }

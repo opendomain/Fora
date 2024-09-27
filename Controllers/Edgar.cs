@@ -10,9 +10,11 @@ namespace Fora.Controllers
     public class Edgar : ControllerBase
     {
         private ICallEdgarService _callEdgarService;
-        public Edgar(ICallEdgarService callEdgarService)
+        private ICrudDbService _crudDbService;
+        public Edgar(ICallEdgarService callEdgarService, ICrudDbService crudDbService)
         {
             _callEdgarService = callEdgarService;
+            _crudDbService = crudDbService;
         }
 
         [HttpGet]
@@ -26,7 +28,5 @@ namespace Fora.Controllers
 
             return Ok(edgarCompanyInfo);
         }
-
-
     }
 }
