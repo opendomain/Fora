@@ -11,18 +11,18 @@ namespace Fora.Controllers
     public class Company : ControllerBase
     {
         private readonly IMapper _mapper;
-        private IForaService _foraService;
+        private ICrudDbService _crudDbService;
 
-        public Company(IMapper mapper, IForaService foraService)
+        public Company(IMapper mapper, ICrudDbService crudDbService)
         {
             _mapper = mapper;
-            _foraService = foraService;
+            _crudDbService = crudDbService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(char? startChar)
         {
-            List<EdgarCompanyData>? allEdgarCompanyData = await _foraService.GetAllCompanies();
+            List<EdgarCompanyData>? allEdgarCompanyData = await _crudDbService.GetAllCompanyData();
 
             if (startChar != null)
             {
@@ -40,7 +40,7 @@ namespace Fora.Controllers
         [HttpGet("{Cik}")]
         public async Task<IActionResult> Get(int Cik)
         {
-            EdgarCompanyData? edgarCompanyData = await _foraService.GetCompany(Cik);
+            EdgarCompanyData? edgarCompanyData = await _crudDbService.GetCompanyData(Cik);
 
             Model.CompanyOutput company;
             company = _mapper.Map<Model.CompanyOutput>(edgarCompanyData);

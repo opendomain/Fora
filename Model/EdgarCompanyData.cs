@@ -6,14 +6,14 @@ namespace Fora.Model
 {
     public class EdgarCompanyData
     {
-        public EdgarCompanyData(int Cik)
+        public EdgarCompanyData(int cik)
         {
             this.Cik = Cik;
             this.EntityName = null;
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
 
-        public EdgarCompanyData(int Cik, string entityName)
+        public EdgarCompanyData(int cik, string entityName)
         {
             this.Cik = Cik;
             this.EntityName = entityName;

@@ -10,18 +10,16 @@ namespace Fora
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add services to the container.
+
             string? connectionString = builder.Configuration.GetConnectionString("ForaEdgarDbServerConn");
             builder.Services.AddDbContext<EdgarCompanyDataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 
-            builder.Services.AddSingleton<IForaService, ForaService>();
-
+            builder.Services.AddSingleton<ICrudDbService, CrudDbService>();
+            builder.Services.AddSingleton<ICallEdgarService, CallEdgarService>();
             builder.Services.AddAutoMapper(typeof(Program));
 
-
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -37,7 +35,6 @@ namespace Fora
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
