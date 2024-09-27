@@ -4,9 +4,9 @@ namespace Fora.Services
 {
     public interface IForaService
     {
-        List<EdgarCompanyInfo> GetAllCompanies();
+        Task<List<EdgarCompanyData>> GetAllCompanies();
 
-        EdgarCompanyInfo? GetCompany(int Cik);
+        Task<EdgarCompanyData?> GetCompany(int Cik);
 
         bool AddCompany(int Cik, string entityName);
 

@@ -1,77 +1,41 @@
 ﻿using Fora.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fora.Services
 {
     public class ForaService : IForaService
     {
-        private readonly List<EdgarCompanyInfo> _edgarCompanyInfoList;
+        private readonly EdgarCompanyDataContext _db;
 
-        public ForaService()
+        public ForaService(EdgarCompanyDataContext db)
         {
-            _edgarCompanyInfoList = new List<EdgarCompanyInfo>();
-
-            AddCompany(0000018926, "LUMEN TECHNOLOGIES, INC.");
-            AddCompany(0000892553, "CHART INDUSTRIES, INC.");
-            AddCompany(1858912, "GARDINER HEALTHCARE ACQUISITIONS CORP.");
+            _db = db;
         }
 
         public bool AddCompany(int Cik, string entityName)
         {
-            EdgarCompanyInfo edgarCompanyInfo;
-
-            int companyIndex = _edgarCompanyInfoList.FindIndex(index => index.Cik == Cik);
-            if (companyIndex < 0)
-            {
-                // TODO: Check if name alreasdy exists
-                edgarCompanyInfo = new EdgarCompanyInfo(Cik, entityName);
-                _edgarCompanyInfoList.Add(edgarCompanyInfo);
-
-                return true;
-            }
-
             return false;
         }
 
         public bool DeleteCompany(int Cik)
         {
-            int companyIndex = _edgarCompanyInfoList.FindIndex(index => index.Cik == Cik);
-            if (companyIndex >= 0) { 
-                _edgarCompanyInfoList.RemoveAt(companyIndex);
-                return true;
-            }
-
             return false;
         }
 
-        public List<EdgarCompanyInfo> GetAllCompanies()
+        public async Task<List<EdgarCompanyData>> GetAllCompanies()
         {
-            return _edgarCompanyInfoList.ToList();
+            return await _db.EdgarCompanyDataList.ToListAsync();
         }
 
-        public EdgarCompanyInfo? GetCompany(int Cik)
+        public async Task<EdgarCompanyData?> GetCompany(int Cik)
         {
             // TODO: Use Id instead of Cik?
-            return _edgarCompanyInfoList.FirstOrDefault(c => c.Cik == Cik);
+            return await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == Cik);
         }
 
         public bool UpdateCompany(int Cik, string entityName)
         {
-            int companyIndex = _edgarCompanyInfoList.FindIndex(index => index.Cik == Cik);
-            if (companyIndex >= 0)
-            {
-                EdgarCompanyInfo edgarCompanyInfo;
-                edgarCompanyInfo = _edgarCompanyInfoList[companyIndex];
-
-                edgarCompanyInfo.EntityName = entityName;
-
-                // TODO: Is this required?
-                _edgarCompanyInfoList[companyIndex] = edgarCompanyInfo;
-
-                return true;
-            }
-
             return false;
-
         }
     }
 }

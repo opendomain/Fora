@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fora.Migrations
 {
     [DbContext(typeof(EdgarCompanyDataContext))]
-    [Migration("20240926052814_createDatabase")]
+    [Migration("20240926205351_createDatabase")]
     partial class createDatabase
     {
         /// <inheritdoc />

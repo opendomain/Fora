@@ -1,6 +1,6 @@
 ﻿namespace Fora.Model
 {
-    public class Company
+    public class CompanyOutput
     {
         public int id { get; set; }
         public string name { get; set; }
