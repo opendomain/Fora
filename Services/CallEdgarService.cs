@@ -7,6 +7,8 @@ namespace Fora.Services
 {
     public class CallEdgarService : ICallEdgarService
     {
+        private readonly long MAX_CIK = 9999999999;
+
         private IHttpClientFactory _httpClientFactory;
 
         public CallEdgarService(IHttpClientFactory httpClientFactory)
@@ -19,14 +21,19 @@ namespace Fora.Services
             //if (!string.IsNullOrWhiteSpace(baseAddress)) _baseAddress = baseAddress;
         }
 
-        private string FormatID(int cik)
+        private string FormatID(long cik)
         {
+            if (cik <= 0 || cik > MAX_CIK)
+            {
+                throw new ArgumentException("cik out of range");
+            }
+
             string fileName = "CIK" + cik.ToString("0000000000") + ".json";
 
             return fileName;
         }
 
-        public async Task<EdgarCompanyInfo?> GetEdgarInfo(int cik)
+        public async Task<EdgarCompanyInfo?> GetEdgarInfo(long cik)
         {
             EdgarCompanyInfo? edgarCompanyInfo = null;
 

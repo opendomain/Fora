@@ -18,9 +18,9 @@ namespace Fora.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int cik)
+        public async Task<IActionResult> Get(long Cik)
         {
-            EdgarCompanyInfo? edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(cik);
+            EdgarCompanyInfo? edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(Cik);
 
             if (edgarCompanyInfo == null) { 
                 return NotFound();

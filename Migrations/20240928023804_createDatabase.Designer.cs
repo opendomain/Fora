@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fora.Migrations
 {
     [DbContext(typeof(EdgarCompanyDataContext))]
-    [Migration("20240928010000_createDatabase")]
+    [Migration("20240928023804_createDatabase")]
     partial class createDatabase
     {
         /// <inheritdoc />
@@ -27,8 +27,8 @@ namespace Fora.Migrations
 
             modelBuilder.Entity("Fora.Model.EdgarCompanyData", b =>
                 {
-                    b.Property<int>("Cik")
-                        .HasColumnType("int");
+                    b.Property<long>("Cik")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("EntityName")
                         .HasColumnType("nvarchar(max)");
@@ -43,416 +43,416 @@ namespace Fora.Migrations
                     b.HasData(
                         new
                         {
-                            Cik = 18926
+                            Cik = 18926L
                         },
                         new
                         {
-                            Cik = 892553
+                            Cik = 892553L
                         },
                         new
                         {
-                            Cik = 1510524
+                            Cik = 1510524L
                         },
                         new
                         {
-                            Cik = 1858912
+                            Cik = 1858912L
                         },
                         new
                         {
-                            Cik = 1828248
+                            Cik = 1828248L
                         },
                         new
                         {
-                            Cik = 1819493
+                            Cik = 1819493L
                         },
                         new
                         {
-                            Cik = 60086
+                            Cik = 60086L
                         },
                         new
                         {
-                            Cik = 1853630
+                            Cik = 1853630L
                         },
                         new
                         {
-                            Cik = 1761312
+                            Cik = 1761312L
                         },
                         new
                         {
-                            Cik = 1851182
+                            Cik = 1851182L
                         },
                         new
                         {
-                            Cik = 1034665
+                            Cik = 1034665L
                         },
                         new
                         {
-                            Cik = 927628
+                            Cik = 927628L
                         },
                         new
                         {
-                            Cik = 1125259
+                            Cik = 1125259L
                         },
                         new
                         {
-                            Cik = 1547660
+                            Cik = 1547660L
                         },
                         new
                         {
-                            Cik = 1393311
+                            Cik = 1393311L
                         },
                         new
                         {
-                            Cik = 1757143
+                            Cik = 1757143L
                         },
                         new
                         {
-                            Cik = 1958217
+                            Cik = 1958217L
                         },
                         new
                         {
-                            Cik = 312070
+                            Cik = 312070L
                         },
                         new
                         {
-                            Cik = 310522
+                            Cik = 310522L
                         },
                         new
                         {
-                            Cik = 1861841
+                            Cik = 1861841L
                         },
                         new
                         {
-                            Cik = 1037868
+                            Cik = 1037868L
                         },
                         new
                         {
-                            Cik = 1696355
+                            Cik = 1696355L
                         },
                         new
                         {
-                            Cik = 1166834
+                            Cik = 1166834L
                         },
                         new
                         {
-                            Cik = 915912
+                            Cik = 915912L
                         },
                         new
                         {
-                            Cik = 1085277
+                            Cik = 1085277L
                         },
                         new
                         {
-                            Cik = 831259
+                            Cik = 831259L
                         },
                         new
                         {
-                            Cik = 882291
+                            Cik = 882291L
                         },
                         new
                         {
-                            Cik = 1521036
+                            Cik = 1521036L
                         },
                         new
                         {
-                            Cik = 1824502
+                            Cik = 1824502L
                         },
                         new
                         {
-                            Cik = 1015647
+                            Cik = 1015647L
                         },
                         new
                         {
-                            Cik = 884624
+                            Cik = 884624L
                         },
                         new
                         {
-                            Cik = 1501103
+                            Cik = 1501103L
                         },
                         new
                         {
-                            Cik = 1397183
+                            Cik = 1397183L
                         },
                         new
                         {
-                            Cik = 1552797
+                            Cik = 1552797L
                         },
                         new
                         {
-                            Cik = 1894630
+                            Cik = 1894630L
                         },
                         new
                         {
-                            Cik = 823277
+                            Cik = 823277L
                         },
                         new
                         {
-                            Cik = 21175
+                            Cik = 21175L
                         },
                         new
                         {
-                            Cik = 1439124
+                            Cik = 1439124L
                         },
                         new
                         {
-                            Cik = 52827
+                            Cik = 52827L
                         },
                         new
                         {
-                            Cik = 1730773
+                            Cik = 1730773L
                         },
                         new
                         {
-                            Cik = 1867287
+                            Cik = 1867287L
                         },
                         new
                         {
-                            Cik = 1685428
+                            Cik = 1685428L
                         },
                         new
                         {
-                            Cik = 1007587
+                            Cik = 1007587L
                         },
                         new
                         {
-                            Cik = 92103
+                            Cik = 92103L
                         },
                         new
                         {
-                            Cik = 1641751
+                            Cik = 1641751L
                         },
                         new
                         {
-                            Cik = 6845
+                            Cik = 6845L
                         },
                         new
                         {
-                            Cik = 1231457
+                            Cik = 1231457L
                         },
                         new
                         {
-                            Cik = 947263
+                            Cik = 947263L
                         },
                         new
                         {
-                            Cik = 895421
+                            Cik = 895421L
                         },
                         new
                         {
-                            Cik = 1988979
+                            Cik = 1988979L
                         },
                         new
                         {
-                            Cik = 1848898
+                            Cik = 1848898L
                         },
                         new
                         {
-                            Cik = 844790
+                            Cik = 844790L
                         },
                         new
                         {
-                            Cik = 1541309
+                            Cik = 1541309L
                         },
                         new
                         {
-                            Cik = 1858007
+                            Cik = 1858007L
                         },
                         new
                         {
-                            Cik = 1729944
+                            Cik = 1729944L
                         },
                         new
                         {
-                            Cik = 726958
+                            Cik = 726958L
                         },
                         new
                         {
-                            Cik = 1691221
+                            Cik = 1691221L
                         },
                         new
                         {
-                            Cik = 730272
+                            Cik = 730272L
                         },
                         new
                         {
-                            Cik = 1308106
+                            Cik = 1308106L
                         },
                         new
                         {
-                            Cik = 884144
+                            Cik = 884144L
                         },
                         new
                         {
-                            Cik = 1108134
+                            Cik = 1108134L
                         },
                         new
                         {
-                            Cik = 1849058
+                            Cik = 1849058L
                         },
                         new
                         {
-                            Cik = 1435617
+                            Cik = 1435617L
                         },
                         new
                         {
-                            Cik = 1857518
+                            Cik = 1857518L
                         },
                         new
                         {
-                            Cik = 64803
+                            Cik = 64803L
                         },
                         new
                         {
-                            Cik = 1912498
+                            Cik = 1912498L
                         },
                         new
                         {
-                            Cik = 1447380
+                            Cik = 1447380L
                         },
                         new
                         {
-                            Cik = 1232384
+                            Cik = 1232384L
                         },
                         new
                         {
-                            Cik = 1141788
+                            Cik = 1141788L
                         },
                         new
                         {
-                            Cik = 1549922
+                            Cik = 1549922L
                         },
                         new
                         {
-                            Cik = 914475
+                            Cik = 914475L
                         },
                         new
                         {
-                            Cik = 1498382
+                            Cik = 1498382L
                         },
                         new
                         {
-                            Cik = 1400897
+                            Cik = 1400897L
                         },
                         new
                         {
-                            Cik = 314808
+                            Cik = 314808L
                         },
                         new
                         {
-                            Cik = 1323885
+                            Cik = 1323885L
                         },
                         new
                         {
-                            Cik = 1526520
+                            Cik = 1526520L
                         },
                         new
                         {
-                            Cik = 1550695
+                            Cik = 1550695L
                         },
                         new
                         {
-                            Cik = 1634293
+                            Cik = 1634293L
                         },
                         new
                         {
-                            Cik = 1756708
+                            Cik = 1756708L
                         },
                         new
                         {
-                            Cik = 1540159
+                            Cik = 1540159L
                         },
                         new
                         {
-                            Cik = 1076691
+                            Cik = 1076691L
                         },
                         new
                         {
-                            Cik = 1980088
+                            Cik = 1980088L
                         },
                         new
                         {
-                            Cik = 1532346
+                            Cik = 1532346L
                         },
                         new
                         {
-                            Cik = 923796
+                            Cik = 923796L
                         },
                         new
                         {
-                            Cik = 1849635
+                            Cik = 1849635L
                         },
                         new
                         {
-                            Cik = 1872292
+                            Cik = 1872292L
                         },
                         new
                         {
-                            Cik = 1227857
+                            Cik = 1227857L
                         },
                         new
                         {
-                            Cik = 1046311
+                            Cik = 1046311L
                         },
                         new
                         {
-                            Cik = 1710350
+                            Cik = 1710350L
                         },
                         new
                         {
-                            Cik = 1476150
+                            Cik = 1476150L
                         },
                         new
                         {
-                            Cik = 1844642
+                            Cik = 1844642L
                         },
                         new
                         {
-                            Cik = 1967078
+                            Cik = 1967078L
                         },
                         new
                         {
-                            Cik = 14272
+                            Cik = 14272L
                         },
                         new
                         {
-                            Cik = 933267
+                            Cik = 933267L
                         },
                         new
                         {
-                            Cik = 1157557
+                            Cik = 1157557L
                         },
                         new
                         {
-                            Cik = 1560293
+                            Cik = 1560293L
                         },
                         new
                         {
-                            Cik = 217410
+                            Cik = 217410L
                         },
                         new
                         {
-                            Cik = 1798562
+                            Cik = 1798562L
                         },
                         new
                         {
-                            Cik = 1038074
+                            Cik = 1038074L
                         },
                         new
                         {
-                            Cik = 1843370
+                            Cik = 1843370L
                         });
                 });
 
             modelBuilder.Entity("Fora.Model.EdgarCompanyData+InfoFactUsGaapIncomeLossUnitsUsd", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
-                    b.Property<int?>("EdgarCompanyDataCik")
-                        .HasColumnType("int");
+                    b.Property<long?>("EdgarCompanyDataCik")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Form")
                         .IsRequired()

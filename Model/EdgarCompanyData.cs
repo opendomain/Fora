@@ -6,14 +6,14 @@ namespace Fora.Model
 {
     public class EdgarCompanyData
     {
-        public EdgarCompanyData(int cik)
+        public EdgarCompanyData(long cik)
         {
             this.Cik = cik;
             this.EntityName = null;
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
 
-        public EdgarCompanyData(int cik, string entityName)
+        public EdgarCompanyData(long cik, string entityName)
         {
             this.Cik = cik;
             this.EntityName = entityName;
@@ -23,7 +23,7 @@ namespace Fora.Model
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Cik { get; set; }
+        public long Cik { get; set; }
 
         public string? EntityName { get; set; }
         public List<InfoFactUsGaapIncomeLossUnitsUsd> Usd { get; set; }
@@ -34,7 +34,7 @@ namespace Fora.Model
         {
             [Key]
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int id { get; set; }
+            public long id { get; set; }
 
             /// <summary>
             /// Possibilities include 10-Q, 10-K,8-K, 20-F, 40-F, 6-K, and

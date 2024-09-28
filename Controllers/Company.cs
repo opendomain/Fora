@@ -39,7 +39,7 @@ namespace Fora.Controllers
         }
 
         [HttpGet("{Cik}")]
-        public async Task<IActionResult> Get(int Cik)
+        public async Task<IActionResult> Get(long Cik)
         {
             EdgarCompanyData? edgarCompanyData = await _crudDbService.GetCompanyData(Cik);
 

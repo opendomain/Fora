@@ -7,7 +7,7 @@ namespace Fora.Services
 {
     public class UpdateDbBackgroundService : BackgroundService
     {
-        private const int MAX_NUM_UPDATE = 5;
+        private const int MAX_NUM_UPDATE = 10;
         private const int DELAY = 5;
 
         private readonly TimeSpan _delayStart = TimeSpan.FromSeconds(DELAY);
@@ -36,7 +36,7 @@ namespace Fora.Services
             {
                 int hrs = 0;
                 int min = 0;
-                int sec = 10;
+                int sec = 2;
 
                 try
                 {
@@ -56,6 +56,8 @@ namespace Fora.Services
                             EdgarCompanyInfo? edgarCompanyInfo;
                             ICallEdgarService callEdgarService = _serviceProvider.GetRequiredService<ICallEdgarService>();
 
+
+                            // TODO: parallel
                             foreach (EdgarCompanyData edgarCompanyData in emptyEdgarCompanyData)
                             {
                                 // Where above should filter out Null EntityNames

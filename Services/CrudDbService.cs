@@ -13,7 +13,7 @@ namespace Fora.Services
             _db = db;
         }
 
-        public async Task<bool> AddCompanyData(int cik, string entityName)
+        public async Task<bool> AddCompanyData(long cik, string entityName)
         {
             EdgarCompanyData edgarCompanyData = new EdgarCompanyData(cik, entityName);
             
@@ -23,7 +23,7 @@ namespace Fora.Services
             return result >= 0;
         }
 
-        public async Task<bool> DeleteCompanyData(int cik)
+        public async Task<bool> DeleteCompanyData(long cik)
         {
             EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
             if (edgarCompanyData != null) {
@@ -55,13 +55,13 @@ namespace Fora.Services
             return allEdgarCompanyData;
         }
 
-        public async Task<EdgarCompanyData?> GetCompanyData(int cik)
+        public async Task<EdgarCompanyData?> GetCompanyData(long cik)
         {
             // TODO: Use Id instead of Cik?
             return await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
         }
 
-        public async Task<bool> UpdateCompanyData(int cik, string entityName)
+        public async Task<bool> UpdateCompanyData(long cik, string entityName)
         {
             EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
             if (edgarCompanyData == null) {

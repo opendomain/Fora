@@ -6,12 +6,12 @@ namespace Fora.Services
     {
         Task<List<EdgarCompanyData>> GetAllCompanyData(bool onlyGetUpdatedFlag, bool onlyGetValidNames);
 
-        Task<EdgarCompanyData?> GetCompanyData(int cik);
+        Task<EdgarCompanyData?> GetCompanyData(long cik);
 
-        Task<bool> AddCompanyData(int cik, string entityName);
+        Task<bool> AddCompanyData(long cik, string entityName);
 
-        Task<bool> UpdateCompanyData(int cik, string entityName);
+        Task<bool> UpdateCompanyData(long cik, string entityName);
         
-        Task<bool> DeleteCompanyData(int cik);
+        Task<bool> DeleteCompanyData(long cik);
     }
 }

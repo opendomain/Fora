@@ -4,13 +4,13 @@ namespace Fora.Model
 {
     public class EdgarCompanyInfo
     {
-        public EdgarCompanyInfo(int Cik, string? entityName)
+        public EdgarCompanyInfo(long cik, string? entityName)
         {
-            this.Cik = Cik;
+            this.Cik = cik;
             this.EntityName = entityName;
         }
 
-        public int Cik { get; set; }
+        public long Cik { get; set; }
 
         public string CikFormated { 
             get
