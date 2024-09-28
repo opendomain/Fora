@@ -20,6 +20,7 @@ namespace Fora.Model
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
 
+        // TODO: Make Read only once set by contructor
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -47,7 +48,7 @@ namespace Fora.Model
             /// number.For example: CY2021.YOU ARE INTERESTED ONLY IN YEARLY INFORMATION
             /// WHICH FOLLOWS THIS FORMAT!
             /// </summary>
-            public string Frame { get; set; }
+            public int Year { get; set; }
 
             /// <summary>
             /// The income/loss amount.

@@ -72,30 +72,21 @@ namespace Fora.Services
                                     List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList = new List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd>();
 
                                     // TODO: Move filter algo
-                                    var usdList10k = edgarCompanyInfo?.Facts?.UsGaap?.NetIncomeLoss?.Units?.Usd?.Where(u => u.Form?.ToUpper() == "10-K");
+                                    var usdList10k = edgarCompanyInfo?.Facts?.UsGaap?.NetIncomeLoss?.Units?.Usd?.Where(u => u.IsGoodForm);
 
                                     if (usdList10k != null)
                                     {
                                         foreach (Model.EdgarCompanyInfo.InfoFactUsGaapIncomeLossUnitsUsd usditem in usdList10k)
                                         {
-                                            string? frame = usditem?.Frame;
-                                            if (!string.IsNullOrEmpty(frame) && frame.Length == 6)
+                                            int year = usditem.Year;
+                                            if (year > 0)
                                             {
-                                                if (frame.StartsWith("CY", StringComparison.CurrentCultureIgnoreCase))
-                                                {
-                                                    string yearString = frame.Substring(2, 4);
-                                                    int year;
-                                                    bool isYear = int.TryParse(yearString, out year);
-                                                    if (isYear)
-                                                    {
-                                                        Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd infoFactUsGaapIncomeLossUnitsUsd = new Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd();
-                                                        infoFactUsGaapIncomeLossUnitsUsd.Form = usditem.Form;
-                                                        infoFactUsGaapIncomeLossUnitsUsd.Frame = frame;
-                                                        infoFactUsGaapIncomeLossUnitsUsd.Val = usditem.Val;
+                                                Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd infoFactUsGaapIncomeLossUnitsUsd = new Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd();
+                                                infoFactUsGaapIncomeLossUnitsUsd.Form = usditem.Form;
+                                                infoFactUsGaapIncomeLossUnitsUsd.Year = year;
+                                                infoFactUsGaapIncomeLossUnitsUsd.Val = usditem.Val;
 
-                                                        infoFactUsGaapIncomeLossUnitsUsdList.Add(infoFactUsGaapIncomeLossUnitsUsd);
-                                                    }
-                                                }
+                                                infoFactUsGaapIncomeLossUnitsUsdList.Add(infoFactUsGaapIncomeLossUnitsUsd);
                                             }
                                         }
                                     }

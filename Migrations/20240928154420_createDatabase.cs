@@ -33,7 +33,7 @@ namespace Fora.Migrations
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Form = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Frame = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
                     Val = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     EdgarCompanyDataCik = table.Column<long>(type: "bigint", nullable: true)
                 },
