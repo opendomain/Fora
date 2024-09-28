@@ -13,7 +13,7 @@ namespace Fora.Model
             Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
         }
 
-        public EdgarCompanyData(long cik, string entityName)
+        public EdgarCompanyData(long cik, string? entityName)
         {
             this.Cik = cik;
             this.EntityName = entityName;

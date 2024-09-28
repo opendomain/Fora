@@ -13,13 +13,15 @@ namespace Fora.Services
             _db = db;
         }
 
-        public async Task<bool> AddCompanyData(long cik, string entityName)
+        public async Task<bool> AddCompanyData(long cik, string? entityName)
         {
             EdgarCompanyData edgarCompanyData = new EdgarCompanyData(cik, entityName);
             
             await _db.EdgarCompanyDataList.AddAsync(edgarCompanyData);
 
             var result = await _db.SaveChangesAsync();
+
+            // TODO: Check result
             return result >= 0;
         }
 
@@ -31,6 +33,8 @@ namespace Fora.Services
             }
             _db.EdgarCompanyDataList.Remove(edgarCompanyData);
             var result = await _db.SaveChangesAsync();
+
+            // TODO: Check result
             return result >= 0;
         }
 
@@ -61,7 +65,7 @@ namespace Fora.Services
             return await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
         }
 
-        public async Task<bool> UpdateCompanyData(long cik, string entityName)
+        public async Task<bool> UpdateCompanyData(long cik, string? entityName)
         {
             EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
             if (edgarCompanyData == null) {
@@ -71,7 +75,31 @@ namespace Fora.Services
             edgarCompanyData.EntityName = entityName;
             edgarCompanyData.Updated = DateTime.UtcNow;
             var result = await _db.SaveChangesAsync();
+
+            // TODO: check result
             return result >= 0;
+        }
+
+        public async Task<bool> AddUnits(long cik, List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList)
+        {
+            if (infoFactUsGaapIncomeLossUnitsUsdList != null && infoFactUsGaapIncomeLossUnitsUsdList.Count > 0) {
+                EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
+                if (edgarCompanyData == null)
+                {
+                    return false;
+                }
+
+                // TODO: Is clear needed?
+                edgarCompanyData.Usd.Clear();
+                foreach (Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd infoFactUsGaapIncomeLossUnitsUsd in infoFactUsGaapIncomeLossUnitsUsdList)
+                {
+                    edgarCompanyData.Usd.Add(infoFactUsGaapIncomeLossUnitsUsd);
+                }
+                var result = await _db.SaveChangesAsync();
+
+                return result >= 0;
+            }
+            return false;
         }
     }
 }

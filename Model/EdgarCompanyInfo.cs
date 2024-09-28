@@ -37,7 +37,7 @@ namespace Fora.Model
         }
         public class InfoFactUsGaapIncomeLossUnits
         {
-            public InfoFactUsGaapIncomeLossUnitsUsd[] Usd { get; set; }
+            public List<InfoFactUsGaapIncomeLossUnitsUsd> Usd { get; set; }
         }
         public class InfoFactUsGaapIncomeLossUnitsUsd
         {

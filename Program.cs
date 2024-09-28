@@ -39,6 +39,7 @@ namespace Fora
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // TODO: verify accept header httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.42.0");
             });
 

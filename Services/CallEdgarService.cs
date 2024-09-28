@@ -14,11 +14,6 @@ namespace Fora.Services
         public CallEdgarService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-
-            //, IConfiguration configuration
-            //string? baseAddress = configuration["EdgarUrl"];
-
-            //if (!string.IsNullOrWhiteSpace(baseAddress)) _baseAddress = baseAddress;
         }
 
         private string FormatID(long cik)
@@ -56,6 +51,7 @@ namespace Fora.Services
                             break;
 
                         case System.Net.HttpStatusCode.NotFound:
+                            // Use empty company name to indicate not found
                             edgarCompanyInfo = new EdgarCompanyInfo(cik, "");
                             break;
 
@@ -69,8 +65,7 @@ namespace Fora.Services
             }
             catch (Exception ex)
             {
-                // TODO: check if 404 still needed here
-                // Use empty company name to indicate not found
+                // TODO: filter out Company Errors
                 edgarCompanyInfo = new EdgarCompanyInfo(cik, "ERROR: " + ex.Message);
             }
 
