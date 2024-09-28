@@ -18,17 +18,12 @@ namespace Fora
 
             // Add services to the container.
 
-            builder.Services.Configure<HostOptions>(x =>
-            {
-                x.ServicesStartConcurrently = false;
-                x.ServicesStopConcurrently = false;
-            });
+            var config = builder.Configuration;
 
-            string? connectionString = builder.Configuration.GetConnectionString("ForaEdgarDbServerConn");
+            string? connectionString = config.GetConnectionString("ForaEdgarDbLocalConn");
             builder.Services.AddDbContext<EdgarCompanyDataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 
             builder.Services.AddSingleton<ICrudDbService, CrudDbService>();
-            var config = builder.Configuration;
 
             var edgarUrlConfig = config.GetValue<string>("EdgarUrl");
             if (string.IsNullOrEmpty(edgarUrlConfig)) edgarUrlConfig = _edgarURLDefault;
@@ -39,7 +34,8 @@ namespace Fora
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                // TODO: verify accept header httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                // TODO: verify accept header
+                // httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.42.0");
             });
 
