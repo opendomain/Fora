@@ -67,34 +67,12 @@ namespace Fora.Services
                                 {
                                     // TODO:  Call multiple parallel 
                                     edgarCompanyInfo = await callEdgarService.GetEdgarInfo(edgarCompanyData.Cik);
-                                    if (edgarCompanyInfo == null) { continue; }
+                                    edgarCompanyData.ImportFromEdgar(edgarCompanyInfo);
 
-                                    List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList = new List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd>();
-
-                                    // TODO: Move filter algo
-                                    var usdList10k = edgarCompanyInfo?.Facts?.UsGaap?.NetIncomeLoss?.Units?.Usd?.Where(u => u.IsGoodForm);
-
-                                    if (usdList10k != null)
-                                    {
-                                        foreach (Model.EdgarCompanyInfo.InfoFactUsGaapIncomeLossUnitsUsd usditem in usdList10k)
-                                        {
-                                            int year = usditem.Year;
-                                            if (year > 0)
-                                            {
-                                                Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd infoFactUsGaapIncomeLossUnitsUsd = new Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd();
-                                                infoFactUsGaapIncomeLossUnitsUsd.Form = usditem.Form;
-                                                infoFactUsGaapIncomeLossUnitsUsd.Year = year;
-                                                infoFactUsGaapIncomeLossUnitsUsd.Val = usditem.Val;
-
-                                                infoFactUsGaapIncomeLossUnitsUsdList.Add(infoFactUsGaapIncomeLossUnitsUsd);
-                                            }
-                                        }
-                                    }
+                                    //edgarCompanyData.CalculateFundable();
 
                                     // TODO: Is This needed to update the local?
-                                    edgarCompanyData.EntityName = edgarCompanyInfo.EntityName;
-                                    var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo.EntityName);
-                                    result = await crudDbService.AddUnits(edgarCompanyData.Cik, infoFactUsGaapIncomeLossUnitsUsdList);
+                                    var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo?.EntityName);
                                 }
                             }
                         }

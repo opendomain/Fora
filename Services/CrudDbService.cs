@@ -65,41 +65,19 @@ namespace Fora.Services
             return await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
         }
 
+        // NOTE:  This will also save any other changes to the model, including child records
         public async Task<bool> UpdateCompanyData(long cik, string? entityName)
         {
+            int result = -1;
             EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
-            if (edgarCompanyData == null) {
-                return false;
+            if (edgarCompanyData != null) {
+                edgarCompanyData.EntityName = entityName;
+                edgarCompanyData.Updated = DateTime.UtcNow;
+                result = await _db.SaveChangesAsync();
             }
-
-            edgarCompanyData.EntityName = entityName;
-            edgarCompanyData.Updated = DateTime.UtcNow;
-            var result = await _db.SaveChangesAsync();
 
             // TODO: check result
             return result >= 0;
-        }
-
-        public async Task<bool> AddUnits(long cik, List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList)
-        {
-            if (infoFactUsGaapIncomeLossUnitsUsdList != null && infoFactUsGaapIncomeLossUnitsUsdList.Count > 0) {
-                EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
-                if (edgarCompanyData == null)
-                {
-                    return false;
-                }
-
-                // TODO: Is clear needed?
-                edgarCompanyData.Usd.Clear();
-                foreach (Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd infoFactUsGaapIncomeLossUnitsUsd in infoFactUsGaapIncomeLossUnitsUsdList)
-                {
-                    edgarCompanyData.Usd.Add(infoFactUsGaapIncomeLossUnitsUsd);
-                }
-                var result = await _db.SaveChangesAsync();
-
-                return result >= 0;
-            }
-            return false;
         }
     }
 }

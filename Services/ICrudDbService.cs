@@ -13,7 +13,5 @@ namespace Fora.Services
         Task<bool> UpdateCompanyData(long cik, string? entityName);
         
         Task<bool> DeleteCompanyData(long cik);
-
-        Task<bool> AddUnits(long cik, List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList);
     }
 }
