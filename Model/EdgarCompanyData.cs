@@ -1,4 +1,5 @@
 ﻿using Fora.Services;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -28,9 +29,76 @@ namespace Fora.Model
         public long Cik { get; set; }
 
         public string? EntityName { get; set; }
+        
+        // TODO: Make private/internal set ?
         public List<InfoFactUsGaapIncomeLossUnitsUsd> Usd { get; set; }
 
         public DateTime? Updated { get; set; }
+        public decimal standardFundableAmount { get; set; }
+        public decimal specialFundableAmount { get; set; }
+
+        // TODO: Dirty flag to CalculateFundable
+        internal void CalculateFundable()
+        {
+            decimal targetIncome = 10_000_000m;
+            decimal stdFundableLower = 0.2151m; // 21.51%
+            decimal stdFundableUpper = 0.1233m; // 12.33%
+
+            decimal specialFundableVowel = 0.15m;
+            decimal specialFundable2022isLower = 0.25m;
+
+            standardFundableAmount = 0.0m;
+            specialFundableAmount = 0.0m;
+
+            // TODO: Verify distinct
+            List<InfoFactUsGaapIncomeLossUnitsUsd> disctinctList = 
+                this.Usd
+                    .GroupBy(usd => usd.Year )
+                    .Select(usd => usd.First())
+                    .ToList();
+
+            if (this.Usd.Count != disctinctList.Count)
+            {
+                Usd = new List<InfoFactUsGaapIncomeLossUnitsUsd>();
+                throw new Exception("USD not distinct");
+            }
+
+            var yearsOfIncome = this.Usd.Where(usd => usd.Year >= 2018 && usd.Year <= 2022);
+            if (yearsOfIncome != null && yearsOfIncome.Count() == 4)
+            {
+                var usd2021 = this.Usd.Where(Usd => Usd.Year == 2021).FirstOrDefault();
+                if (usd2021 != null && usd2021.Val > 0.0m ) {
+                    var usd2022 = this.Usd.Where(Usd => Usd.Year == 2022).FirstOrDefault();
+                    if (usd2022 != null && usd2022.Val > 0.0m)
+                    {
+                        decimal maxIncome = yearsOfIncome.Max(usd => usd.Val);
+                        if (maxIncome > targetIncome) {
+                            standardFundableAmount = maxIncome * stdFundableUpper;
+                        } else
+                        {
+                            standardFundableAmount = maxIncome * stdFundableLower;
+                        }
+
+                        decimal specialFundableExtra = 0.0m;
+                        specialFundableAmount = standardFundableAmount;
+
+                        var firstLetter = this.EntityName.Substring(0).ToUpper();
+                        // Letter 'Y' at the beginning of a word is a consonant.
+                        bool isVowel = "AEIOU".IndexOf(firstLetter) >= 0;
+                        if (isVowel) {
+                            specialFundableExtra = (standardFundableAmount * specialFundableVowel);
+                        }
+
+                        if (usd2021.Val > usd2022.Val)
+                        {
+                            specialFundableExtra -= (standardFundableAmount * specialFundable2022isLower);
+                        }
+                        specialFundableAmount += specialFundableExtra;
+                    }
+                }
+
+            }
+        }
 
         internal void ImportFromEdgar(EdgarCompanyInfo? edgarCompanyInfo)
         {
@@ -65,6 +133,8 @@ namespace Fora.Model
             {
                 this.Usd.Add(infoFactUsGaapIncomeLossUnitsUsd);
             }
+
+            CalculateFundable();
         }
 
         public class InfoFactUsGaapIncomeLossUnitsUsd

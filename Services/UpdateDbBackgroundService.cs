@@ -69,8 +69,6 @@ namespace Fora.Services
                                     edgarCompanyInfo = await callEdgarService.GetEdgarInfo(edgarCompanyData.Cik);
                                     edgarCompanyData.ImportFromEdgar(edgarCompanyInfo);
 
-                                    //edgarCompanyData.CalculateFundable();
-
                                     // TODO: Is This needed to update the local?
                                     var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo?.EntityName);
                                 }

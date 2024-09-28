@@ -10,17 +10,15 @@ namespace Fora.Controllers
     public class Edgar : ControllerBase
     {
         private ICallEdgarService _callEdgarService;
-        private ICrudDbService _crudDbService;
-        public Edgar(ICallEdgarService callEdgarService, ICrudDbService crudDbService)
+        public Edgar(ICallEdgarService callEdgarService)
         {
             _callEdgarService = callEdgarService;
-            _crudDbService = crudDbService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(long Cik)
+        public async Task<IActionResult> Get(long cik)
         {
-            EdgarCompanyInfo? edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(Cik);
+            EdgarCompanyInfo? edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(cik);
 
             if (edgarCompanyInfo == null) { 
                 return NotFound();
