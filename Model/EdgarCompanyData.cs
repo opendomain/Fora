@@ -40,7 +40,7 @@ namespace Fora.Model
         // TODO: Dirty flag to CalculateFundable
         internal void CalculateFundable()
         {
-            decimal targetIncome = 10_000_000m;
+            decimal targetIncome = 10_000_000_000m;
             decimal stdFundableLower = 0.2151m; // 21.51%
             decimal stdFundableUpper = 0.1233m; // 12.33%
 
@@ -64,7 +64,7 @@ namespace Fora.Model
             }
 
             var yearsOfIncome = this.Usd.Where(usd => usd.Year >= 2018 && usd.Year <= 2022);
-            if (yearsOfIncome != null && yearsOfIncome.Count() == 4)
+            if (yearsOfIncome != null && yearsOfIncome.Count() == 5)
             {
                 var usd2021 = this.Usd.Where(Usd => Usd.Year == 2021).FirstOrDefault();
                 if (usd2021 != null && usd2021.Val > 0.0m ) {
@@ -82,7 +82,7 @@ namespace Fora.Model
                         decimal specialFundableExtra = 0.0m;
                         specialFundableAmount = standardFundableAmount;
 
-                        var firstLetter = this.EntityName.Substring(0).ToUpper();
+                        var firstLetter = this.EntityName.Substring(0, 1).ToUpper();
                         // Letter 'Y' at the beginning of a word is a consonant.
                         bool isVowel = "AEIOU".IndexOf(firstLetter) >= 0;
                         if (isVowel) {
