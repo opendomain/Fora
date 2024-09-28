@@ -72,7 +72,7 @@ namespace Fora.Services
                                     List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList = new List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd>();
 
                                     // TODO: Move filter algo
-                                    var usdList10k = edgarCompanyInfo?.Facts?.UsGaap?.NetIncomeLoss?.Units?.Usd.Where(u => u.Form?.ToUpper() == "10-K");
+                                    var usdList10k = edgarCompanyInfo?.Facts?.UsGaap?.NetIncomeLoss?.Units?.Usd?.Where(u => u.Form?.ToUpper() == "10-K");
 
                                     if (usdList10k != null)
                                     {
