@@ -68,6 +68,11 @@ namespace Fora.Services
                                     // TODO: Is This needed to update the local?
                                     edgarCompanyData.EntityName = edgarCompanyInfo.EntityName;
                                     var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo.EntityName);
+
+                                    if (!string.IsNullOrEmpty(edgarCompanyInfo.EntityName))
+                                    {
+
+                                    }
                                 }
                             }
                         }

@@ -1,11 +1,17 @@
 
 using Fora.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace Fora
 {
     public class Program
     {
+        private static readonly string _edgarURLDefault = "https://data.sec.gov/api/xbrl/companyfacts/";
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +28,20 @@ namespace Fora
             builder.Services.AddDbContext<EdgarCompanyDataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 
             builder.Services.AddSingleton<ICrudDbService, CrudDbService>();
+            var config = builder.Configuration;
+
+            var edgarUrlConfig = config.GetValue<string>("EdgarUrl");
+            if (string.IsNullOrEmpty(edgarUrlConfig)) edgarUrlConfig = _edgarURLDefault;
+
+            builder.Services.AddHttpClient("Edgar", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(edgarUrlConfig);
+
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.42.0");
+            });
+
             builder.Services.AddSingleton<ICallEdgarService, CallEdgarService>();
             builder.Services.AddAutoMapper(typeof(Program));
 

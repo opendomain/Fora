@@ -1,24 +1,22 @@
-﻿using Fora.Model;
+﻿using Fora.Controllers;
+using Fora.Model;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace Fora.Services
 {
-    public class CallEdgarService: ICallEdgarService
+    public class CallEdgarService : ICallEdgarService
     {
-        private readonly string _baseAddress = "https://data.sec.gov/api/xbrl/companyfacts/";
-        private HttpClient? _httpClient = null;
+        private IHttpClientFactory _httpClientFactory;
 
-        public CallEdgarService()
+        public CallEdgarService(IHttpClientFactory httpClientFactory)
         {
-            SetupClient();
-        }
+            _httpClientFactory = httpClientFactory;
 
-        private void SetupClient() {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_baseAddress);
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.42.0");
+            //, IConfiguration configuration
+            //string? baseAddress = configuration["EdgarUrl"];
+
+            //if (!string.IsNullOrWhiteSpace(baseAddress)) _baseAddress = baseAddress;
         }
 
         private string FormatID(int cik)
@@ -32,19 +30,41 @@ namespace Fora.Services
         {
             EdgarCompanyInfo? edgarCompanyInfo = null;
 
+
             string ckid = FormatID(cik);
             try
             {
-                edgarCompanyInfo = await _httpClient.GetFromJsonAsync<EdgarCompanyInfo>(ckid);
+                // TODO: check if better to create client for each request
+                HttpClient httpClient;
+
+                httpClient = _httpClientFactory.CreateClient("Edgar");
+
+                var response = await httpClient.GetAsync(ckid);
+                if (response != null)
+                {
+                    switch (response.StatusCode)
+                    {
+                        case System.Net.HttpStatusCode.OK:
+                            edgarCompanyInfo = await response.Content.ReadFromJsonAsync<EdgarCompanyInfo>();
+                            break;
+
+                        case System.Net.HttpStatusCode.NotFound:
+                            edgarCompanyInfo = new EdgarCompanyInfo(cik, "");
+                            break;
+
+                        default:
+                            // TODO: Deal with 403 - rate limiting
+                            edgarCompanyInfo = null;
+                            break;
+
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                if (ex.Message.Contains("404"))
-                {
-                    // Use empty company name to indicate not found
-                    edgarCompanyInfo = new EdgarCompanyInfo(cik, "");
-                }
+                // TODO: check if 404 still needed here
+                // Use empty company name to indicate not found
+                edgarCompanyInfo = new EdgarCompanyInfo(cik, "ERROR: " + ex.Message);
             }
 
             return edgarCompanyInfo;
