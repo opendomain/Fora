@@ -23,10 +23,21 @@ namespace Fora.Model
         }
 
         // TODO: Make Read only once set by contructor
+        private long _cik;
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Cik { get; set; }
+        public long Cik {
+            get { 
+                return _cik; 
+            }
+            set {
+                if (value <= 0 || value > 9999999999) {
+                    throw new ArgumentOutOfRangeException("Cik");
+                }
+                _cik = value;
+            } 
+        }
 
         public string? EntityName { get; set; }
         
@@ -100,7 +111,7 @@ namespace Fora.Model
             }
         }
 
-        internal void ImportFromEdgar(EdgarCompanyInfo? edgarCompanyInfo)
+        public void ImportFromEdgar(EdgarCompanyInfo? edgarCompanyInfo)
         {
             List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd> infoFactUsGaapIncomeLossUnitsUsdList = new List<Model.EdgarCompanyData.InfoFactUsGaapIncomeLossUnitsUsd>();
 

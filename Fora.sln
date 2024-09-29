@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fora", "Fora.csproj", "{55C9EB56-1626-4493-ACD5-07B354B49C6D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fora.Tests", "..\Fora.Tests\Fora.Tests.csproj", "{3BC3DD89-D524-4D9B-9A1A-98510E0B8680}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{55C9EB56-1626-4493-ACD5-07B354B49C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C9EB56-1626-4493-ACD5-07B354B49C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C9EB56-1626-4493-ACD5-07B354B49C6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC3DD89-D524-4D9B-9A1A-98510E0B8680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC3DD89-D524-4D9B-9A1A-98510E0B8680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC3DD89-D524-4D9B-9A1A-98510E0B8680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC3DD89-D524-4D9B-9A1A-98510E0B8680}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
