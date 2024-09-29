@@ -9,10 +9,13 @@ namespace Fora.Controllers
     [ApiController]
     public class Edgar : ControllerBase
     {
-        private ICallEdgarService _callEdgarService;
-        public Edgar(ICallEdgarService callEdgarService)
+        private readonly ICallEdgarService _callEdgarService;
+        private readonly ILogger<Edgar> _logger;
+
+        public Edgar(ICallEdgarService callEdgarService, ILogger<Edgar> logger)
         {
             _callEdgarService = callEdgarService;
+            _logger = logger;
         }
 
         [HttpGet]

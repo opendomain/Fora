@@ -14,10 +14,10 @@ namespace Fora.Services
 
         private readonly TimeSpan _delayStart = TimeSpan.FromSeconds(DELAY);
 
-        ILogger<UpdateDbBackgroundService> _logger = null;
-        private Timer? _timer = null;
-
+        private readonly ILogger<UpdateDbBackgroundService> _logger;
         private readonly IServiceProvider _serviceProvider;
+
+        private Timer? _timer = null;
 
         public UpdateDbBackgroundService(IServiceProvider serviceProvider, ILogger<UpdateDbBackgroundService> logger)
         {
@@ -32,10 +32,13 @@ namespace Fora.Services
             await timer.WaitForNextTickAsync(stoppingToken);
             timer.Dispose();
 
+            _logger.LogInformation("*** UpdateDbBackgroundService - START ***");
+
             bool restartFlag = true;
 
             while (!stoppingToken.IsCancellationRequested && restartFlag)
             {
+                // TODO: Make this configurable
                 int hrs = 0;
                 int min = 0;
                 int sec = 3;
@@ -52,6 +55,7 @@ namespace Fora.Services
                         if (emptyEdgarCompanyData.Count == 0)
                         {
                             restartFlag = false;
+                            _logger.LogInformation("*** UpdateDbBackgroundService - DONE ***");
                         }
                         else
                         {
@@ -79,7 +83,7 @@ namespace Fora.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogInformation($"Error in ExecuteAsync {ex.Message}.");
+                    _logger.LogError ($"Error in UpdateDbBackgroundService " + ex.Message);
                     restartFlag = false;
                 }
 

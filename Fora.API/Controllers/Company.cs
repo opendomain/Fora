@@ -12,12 +12,14 @@ namespace Fora.Controllers
     public class Company : ControllerBase
     {
         private readonly IMapper _mapper;
-        private ICrudDbService _crudDbService;
+        private readonly ICrudDbService _crudDbService;
+        private readonly ILogger<Company> _logger;
 
-        public Company(IMapper mapper, ICrudDbService crudDbService)
+        public Company(IMapper mapper, ICrudDbService crudDbService, ILogger<Company> logger)
         {
             _mapper = mapper;
             _crudDbService = crudDbService;
+            _logger = logger;
         }
 
         [HttpGet]

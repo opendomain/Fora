@@ -9,11 +9,13 @@ namespace Fora.Services
     {
         private readonly long MAX_CIK = 9999999999;
 
-        private IHttpClientFactory _httpClientFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<CallEdgarService> _logger;
 
-        public CallEdgarService(IHttpClientFactory httpClientFactory)
+        public CallEdgarService(IHttpClientFactory httpClientFactory, ILogger<CallEdgarService> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
 
         private string FormatID(long cik)
@@ -56,6 +58,7 @@ namespace Fora.Services
                             break;
 
                         default:
+                            _logger.LogWarning("Bad Status for retrival of Edgar data.");
                             // TODO: Deal with 403 - rate limiting
                             edgarCompanyInfo = null;
                             break;
@@ -65,8 +68,9 @@ namespace Fora.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError("ERROR retrival of Edgar data for CIK:" + cik + " message:" + ex.Message);
                 // TODO: filter out Company Errors
-                edgarCompanyInfo = new EdgarCompanyInfo(cik, "ERROR: " + ex.Message);
+                edgarCompanyInfo = new EdgarCompanyInfo(cik, "" );
             }
 
             return edgarCompanyInfo;

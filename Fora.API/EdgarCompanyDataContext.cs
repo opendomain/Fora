@@ -6,6 +6,7 @@ namespace Fora
 {
     public class EdgarCompanyDataContext : DbContext
     {
+        // TODO: Should we add Logger?
         public EdgarCompanyDataContext(DbContextOptions<EdgarCompanyDataContext> options) : base(options)
         {
         }

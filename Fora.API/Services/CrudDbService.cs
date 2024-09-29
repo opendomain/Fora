@@ -7,77 +7,132 @@ namespace Fora.Services
     public class CrudDbService : ICrudDbService
     {
         private readonly EdgarCompanyDataContext _db;
+        private readonly ILogger<CrudDbService> _logger;
 
-        public CrudDbService(EdgarCompanyDataContext db)
+        public CrudDbService(EdgarCompanyDataContext db, ILogger<CrudDbService> logger)
         {
             _db = db;
+            _logger = logger;
         }
 
         public async Task<bool> AddCompanyData(long cik, string? entityName)
         {
-            EdgarCompanyData edgarCompanyData = new EdgarCompanyData(cik, entityName);
-            
-            await _db.EdgarCompanyDataList.AddAsync(edgarCompanyData);
+            int result = -1;
+            EdgarCompanyData edgarCompanyData = null;
 
-            var result = await _db.SaveChangesAsync();
+            try
+            {
+                edgarCompanyData = new EdgarCompanyData(cik, entityName);
+                await _db.EdgarCompanyDataList.AddAsync(edgarCompanyData);
+                result = await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR CrudDbService AddCompanyData:" + ex.Message);
+                result = -1;
+            }
 
             // TODO: Check result
-            return result >= 0;
+            return (result >= 0);
         }
 
         public async Task<bool> DeleteCompanyData(long cik)
         {
-            EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
-            if (edgarCompanyData != null) {
-                return false;
+            int result = -1;
+            EdgarCompanyData? edgarCompanyData = null;
+
+            try
+            {
+                edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
+                if (edgarCompanyData != null)
+                {
+                    _db.EdgarCompanyDataList.Remove(edgarCompanyData);
+                    result = await _db.SaveChangesAsync();                
+                }
             }
-            _db.EdgarCompanyDataList.Remove(edgarCompanyData);
-            var result = await _db.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR CrudDbService DeleteCompanyData:" + ex.Message);
+                result = -1;
+            }
 
             // TODO: Check result
-            return result >= 0;
+            return (result >= 0);
+
         }
 
         // TODO: make filters ternary
         public async Task<List<EdgarCompanyData>> GetAllCompanyData(bool onlyGetUpdatedFlag, bool onlyGetValidNames)
         {
-            List<EdgarCompanyData>? allEdgarCompanyData = await _db.EdgarCompanyDataList.ToListAsync();
+            List<EdgarCompanyData>? allEdgarCompanyData = null;
 
-            if (allEdgarCompanyData != null && allEdgarCompanyData.Count > 0)
+            try
             {
-                if (onlyGetUpdatedFlag)
-                {
-                    allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => ec.Updated != null);
-                }
+                allEdgarCompanyData = await _db.EdgarCompanyDataList.ToListAsync();
 
-                if (onlyGetValidNames)
+                if (allEdgarCompanyData != null)
                 {
-                    allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => !string.IsNullOrEmpty(ec.EntityName) );
-                }
+                    if (onlyGetUpdatedFlag)
+                    {
+                        allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => ec.Updated != null);
+                    }
 
+                    if (onlyGetValidNames)
+                    {
+                        allEdgarCompanyData = allEdgarCompanyData.FindAll(ec => !string.IsNullOrEmpty(ec.EntityName));
+                    }
+                }
             }
+            catch (Exception ex )
+            {
+                _logger.LogError("ERROR CrudDbService GetAllCompanyData:" + ex.Message);
+            }
+
             return allEdgarCompanyData;
         }
 
         public async Task<EdgarCompanyData?> GetCompanyData(long cik)
         {
             // TODO: Use Id instead of Cik?
-            return await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
+
+            EdgarCompanyData? edgarCompanyData = null;
+            try
+            {
+                edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR CrudDbService GetCompanyData:" + ex.Message);
+            }
+
+            return edgarCompanyData;
         }
 
         // NOTE:  This will also save any other changes to the model, including child records
         public async Task<bool> UpdateCompanyData(long cik, string? entityName)
         {
             int result = -1;
-            EdgarCompanyData? edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
-            if (edgarCompanyData != null) {
-                edgarCompanyData.EntityName = entityName;
-                edgarCompanyData.Updated = DateTime.UtcNow;
-                result = await _db.SaveChangesAsync();
+
+            EdgarCompanyData? edgarCompanyData = null;
+
+            try
+            {
+                edgarCompanyData = await _db.EdgarCompanyDataList.FirstOrDefaultAsync(c => c.Cik == cik);
+
+                if (edgarCompanyData != null)
+                {
+                    edgarCompanyData.EntityName = entityName;
+                    edgarCompanyData.Updated = DateTime.UtcNow;
+                    result = await _db.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR CrudDbService UpdateCompanyData:" + ex.Message);
             }
 
             // TODO: check result
-            return result >= 0;
+            return (result >= 0);
         }
     }
 }
