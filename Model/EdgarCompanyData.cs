@@ -83,7 +83,7 @@ namespace Fora.Model
                     if (usd2022 != null && usd2022.Val > 0.0m)
                     {
                         decimal maxIncome = yearsOfIncome.Max(usd => usd.Val);
-                        if (maxIncome > targetIncome) {
+                        if (maxIncome >= targetIncome) {
                             standardFundableAmount = maxIncome * stdFundableUpper;
                         } else
                         {
@@ -93,9 +93,14 @@ namespace Fora.Model
                         decimal specialFundableExtra = 0.0m;
                         specialFundableAmount = standardFundableAmount;
 
-                        var firstLetter = this.EntityName.Substring(0, 1).ToUpper();
-                        // Letter 'Y' at the beginning of a word is a consonant.
-                        bool isVowel = "AEIOU".IndexOf(firstLetter) >= 0;
+                        bool isVowel = false;
+                        if (!string.IsNullOrEmpty(this.EntityName))
+                        {
+                            string? firstLetter = this.EntityName?.Substring(0, 1).ToUpper();
+                            // Letter 'Y' at the beginning of a word is a consonant.
+                            isVowel = "AEIOU".IndexOf(firstLetter) >= 0;
+                        }
+
                         if (isVowel) {
                             specialFundableExtra = (standardFundableAmount * specialFundableVowel);
                         }
