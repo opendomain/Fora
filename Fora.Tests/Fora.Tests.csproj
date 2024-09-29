@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fora\Fora.csproj" />
+    <ProjectReference Include="..\Fora.API\Fora.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
