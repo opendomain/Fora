@@ -18,6 +18,8 @@ namespace Fora
 
             // Add services to the container.
 
+            builder.Services.AddAutoMapper(typeof(Program));
+
             var config = builder.Configuration;
 
             string? connectionString = config.GetConnectionString("ForaEdgarDbLocalConn");
@@ -40,8 +42,8 @@ namespace Fora
             });
 
             builder.Services.AddSingleton<ICallEdgarService, CallEdgarService>();
-            builder.Services.AddAutoMapper(typeof(Program));
 
+            // Background service depends on other services and should be added last
             builder.Services.AddHostedService<UpdateDbBackgroundService>();
 
             builder.Services.AddControllers();
@@ -59,6 +61,7 @@ namespace Fora
 
             app.UseHttpsRedirection();
 
+            // TODO: Do we we need auth?
             app.UseAuthorization();
 
             app.MapControllers();

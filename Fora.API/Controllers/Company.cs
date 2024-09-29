@@ -25,17 +25,31 @@ namespace Fora.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(char? startChar)
         {
-            List<EdgarCompanyData>? allEdgarCompanyData = await _crudDbService.GetAllCompanyData(onlyGetUpdatedFlag: true, onlyGetValidNames: true);
+            List<EdgarCompanyData>? allEdgarCompanyData = null;
+            List<CompanyOutput> allCompanies = null;
 
-            if (startChar != null)
+            try
             {
-                // TODO: allow more than one letter?
-                string strLetter = (startChar.HasValue) ? startChar.ToString(): "";
+                allEdgarCompanyData = await _crudDbService.GetAllCompanyData(onlyGetUpdatedFlag: true, onlyGetValidNames: true);
 
-                allEdgarCompanyData = allEdgarCompanyData.Where(ec => ec.EntityName.StartsWith(strLetter, StringComparison.CurrentCultureIgnoreCase )).ToList();
+                if (allEdgarCompanyData != null) {
+                    if (startChar != null)
+                    {
+                        // TODO: allow more than one letter?
+                        string strLetter = (startChar.HasValue) ? startChar.ToString() : "";
+
+                        allEdgarCompanyData = allEdgarCompanyData.Where(ec => ec.EntityName.StartsWith(strLetter, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                    }
+
+                    allCompanies = _mapper.Map<List<CompanyOutput>>(allEdgarCompanyData);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR: Company GET " +  ex.Message);
             }
 
-            List<CompanyOutput> allCompanies = _mapper.Map<List<CompanyOutput>>(allEdgarCompanyData);
+            if (allCompanies == null) return NotFound();
 
             return Ok(allCompanies);
         }
@@ -43,11 +57,23 @@ namespace Fora.Controllers
         [HttpGet("{Cik}")]
         public async Task<IActionResult> Get(long Cik)
         {
-            EdgarCompanyData? edgarCompanyData = await _crudDbService.GetCompanyData(Cik);
+            EdgarCompanyData? edgarCompanyData = null;
+            Model.CompanyOutput company = null;
 
-            Model.CompanyOutput company;
-            company = _mapper.Map<Model.CompanyOutput>(edgarCompanyData);
+            try
+            {
+                edgarCompanyData = await _crudDbService.GetCompanyData(Cik);
 
+                if (edgarCompanyData != null) {
+                    company = _mapper.Map<Model.CompanyOutput>(edgarCompanyData);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR: Company GET(id) " + ex.Message);
+            }
+
+            if (company == null) return NotFound();
             return Ok(company);
         }
 

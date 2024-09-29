@@ -21,7 +21,15 @@ namespace Fora.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(long cik)
         {
-            EdgarCompanyInfo? edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(cik);
+            EdgarCompanyInfo? edgarCompanyInfo = null;
+            try
+            {
+                edgarCompanyInfo = await _callEdgarService.GetEdgarInfo(cik);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ERROR: Edgar GET " + ex.Message);
+            }
 
             if (edgarCompanyInfo == null) { 
                 return NotFound();
