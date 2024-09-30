@@ -18,6 +18,12 @@ namespace Fora.Controllers
             _logger = logger;
         }
 
+
+        /// <summary>
+        /// Get Edgar Company Info directly from Edgar Service
+        /// </summary>
+        /// <param name="cik">Long company ID (10 digits max)</param>
+        /// <returns>EdgarCompanyInfo</returns>
         [HttpGet]
         public async Task<IActionResult> Get(long cik)
         {

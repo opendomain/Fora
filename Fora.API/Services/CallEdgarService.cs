@@ -5,9 +5,12 @@ using System.Net.Http.Headers;
 
 namespace Fora.Services
 {
+    /// <summary>
+    /// Service to call Edgar HTTP endpoint to get company data
+    /// </summary>
     public class CallEdgarService : ICallEdgarService
     {
-        private readonly long MAX_CIK = 9999999999;
+        private const long MAX_CIK = 9999999999;
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<CallEdgarService> _logger;
@@ -17,7 +20,13 @@ namespace Fora.Services
             _httpClientFactory = httpClientFactory;
             _logger = logger;
         }
-
+        
+        /// <summary>
+        /// Format cik be exactly 10 digits long prepended with "CIK"  and endith with ".json" as expected for Edgar API 
+        /// </summary>
+        /// <param name="cik">Company id - 10 digits max</param>
+        /// <returns>String of formated company request</returns>
+        /// <exception cref="ArgumentException">If CIK is negative or more than 10 digits</exception>
         private string FormatID(long cik)
         {
             if (cik <= 0 || cik > MAX_CIK)
@@ -30,17 +39,22 @@ namespace Fora.Services
             return fileName;
         }
 
+        /// <summary>
+        /// Call Edgar using HTTP client to get company info.
+        /// HTTP client info is Injected to allow change of URL or headers
+        /// </summary>
+        /// <param name="cik">long - 10 digits max</param>
+        /// <returns>EdageCompanyInfo</returns>
         public async Task<EdgarCompanyInfo?> GetEdgarInfo(long cik)
         {
             EdgarCompanyInfo? edgarCompanyInfo = null;
+            HttpClient httpClient = null;
 
-
-            string ckid = FormatID(cik);
             try
             {
-                // TODO: check if better to create client for each request
-                HttpClient httpClient;
+                string ckid = FormatID(cik);
 
+                // TODO: check if better to create client for each request
                 httpClient = _httpClientFactory.CreateClient("Edgar");
 
                 var response = await httpClient.GetAsync(ckid);
@@ -57,9 +71,9 @@ namespace Fora.Services
                             edgarCompanyInfo = new EdgarCompanyInfo(cik, "");
                             break;
 
+                        // TODO: Deal with 403 - rate limiting
                         default:
                             _logger.LogWarning("Bad Status for retrival of Edgar data.");
-                            // TODO: Deal with 403 - rate limiting
                             edgarCompanyInfo = null;
                             break;
 

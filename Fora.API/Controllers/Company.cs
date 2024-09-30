@@ -22,6 +22,11 @@ namespace Fora.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get ALL Company Output from Database
+        /// </summary>
+        /// <param name="startChar">optional filter for company name that starts with a (single) letter</param>
+        /// <returns>List of CompanyOutput</returns>
         [HttpGet]
         public async Task<IActionResult> Get(char? startChar)
         {
@@ -54,6 +59,12 @@ namespace Fora.Controllers
             return Ok(allCompanies);
         }
 
+        // 
+        /// <summary>
+        /// Get CompanyOutput from Database using Company CIK 
+        /// </summary>
+        /// <param name="Cik">Unique company ID</param>
+        /// <returns>CompanyOutput</returns>
         [HttpGet("{Cik}")]
         public async Task<IActionResult> Get(long Cik)
         {

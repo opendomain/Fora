@@ -5,6 +5,8 @@ using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Fora
 {
@@ -48,7 +50,20 @@ namespace Fora
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(d =>
+            {
+                d.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Fora Edgar API",
+                    Version = "v1.0",
+                    Description = "Fora coding challenge V2"
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                d.IncludeXmlComments(xmlPath);
+            });
 
             var app = builder.Build();
 

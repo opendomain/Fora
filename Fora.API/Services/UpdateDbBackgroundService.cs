@@ -7,17 +7,19 @@ using static Fora.Model.EdgarCompanyInfo;
 
 namespace Fora.Services
 {
+    /// <summary>
+    /// Hosted background service to Call Edgar HTTP and then update the database
+    /// </summary>
     public class UpdateDbBackgroundService : BackgroundService
     {
+        // The number of records to retrieve and update at one time
         private const int MAX_NUM_UPDATE = 1;
+        // The number of seconds befre starting the update process
         private const int DELAY = 10;
-
         private readonly TimeSpan _delayStart = TimeSpan.FromSeconds(DELAY);
 
         private readonly ILogger<UpdateDbBackgroundService> _logger;
         private readonly IServiceProvider _serviceProvider;
-
-        private Timer? _timer = null;
 
         public UpdateDbBackgroundService(IServiceProvider serviceProvider, ILogger<UpdateDbBackgroundService> logger)
         {
@@ -27,13 +29,14 @@ namespace Fora.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // TODO: Create timer to delay Update
+            // Create timer to delay Update
             PeriodicTimer timer = new PeriodicTimer(_delayStart);
             await timer.WaitForNextTickAsync(stoppingToken);
             timer.Dispose();
 
             _logger.LogInformation("*** UpdateDbBackgroundService - START ***");
 
+            // This flag is unset when done or there is an error,.  This allows the process to stop
             bool restartFlag = true;
 
             while (!stoppingToken.IsCancellationRequested && restartFlag)
@@ -54,6 +57,7 @@ namespace Fora.Services
 
                         if (emptyEdgarCompanyData.Count == 0)
                         {
+                            // No more records to update. Exit process
                             restartFlag = false;
                             _logger.LogInformation("*** UpdateDbBackgroundService - DONE ***");
                         }
@@ -62,19 +66,18 @@ namespace Fora.Services
                             EdgarCompanyInfo? edgarCompanyInfo;
                             ICallEdgarService callEdgarService = _serviceProvider.GetRequiredService<ICallEdgarService>();
 
-
-                            // TODO: parallel
+                            // TODO: Make this parallel request for faster processing
                             foreach (EdgarCompanyData edgarCompanyData in emptyEdgarCompanyData)
                             {
-                                // Where above should filter out Null EntityNames
+                                // The WHERE above should filter out Null EntityNames, this is just to double check
                                 if (edgarCompanyData.EntityName == null)
                                 {
-                                    // TODO:  Call multiple parallel 
                                     edgarCompanyInfo = await callEdgarService.GetEdgarInfo(edgarCompanyData.Cik);
-                                    edgarCompanyData.ImportFromEdgar(edgarCompanyInfo);
-
-                                    // TODO: Is This needed to update the local?
-                                    var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo?.EntityName);
+                                    // TODO: what to do if NULL?  Throw exception?
+                                    if (edgarCompanyInfo != null) {
+                                        edgarCompanyData.ImportFromEdgar(edgarCompanyInfo);
+                                        var result = await crudDbService.UpdateCompanyData(edgarCompanyData.Cik, edgarCompanyInfo?.EntityName);
+                                    }
                                 }
                             }
                         }
@@ -91,6 +94,7 @@ namespace Fora.Services
                 {
                     if (restartFlag)
                     {
+                        // time to sleep before retrieved next record.  Used to throttle rquests to Edgar
                         await Task.Delay(new TimeSpan(hrs, min, sec));
                     }
                 }
